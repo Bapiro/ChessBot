@@ -137,6 +137,8 @@ function onDrop(source, target) {
     // illegal move
     if (move === null) return 'snapback';
 
+    //take away grey help squares
+    onMouseOutSquare();
     // make random legal move for black
     window.setTimeout(makeGreatMove, 250);
 }
