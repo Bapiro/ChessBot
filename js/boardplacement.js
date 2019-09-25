@@ -63,22 +63,46 @@ function getBestMove(gamePlace) {
     var bestMove = null;
     var bestValue = -9999;
 
-
+    depth = 3;
     for (var i = 0; i < gameMoves.length; i++) {
         var newGameMove = gameMoves[i];
         gamePlace.move(newGameMove);
 
-        var boardValue = -evaluateBoard(gamePlace);
+        var boardValue = minimax(gamePlace, depth);
+
         gamePlace.undo();
-        if (boardValue > bestValue) {
+        if (boardValue >= bestValue) {
             bestValue = boardValue;
-            bestMove = newGameMove
+            bestMove = newGameMove;
         }
+
     }
-    return bestMove;
+
+
+    return BestMove;
 
 }
+function minimax(gamePosition, depth) {
 
+    if (depth == 0) {
+        return -evaluateBoard(gamePosition);
+    }
+    var gameMoves = gamePosition.moves();
+    var boardValue = 0;
+    var bestBoardValue = 9999;
+    for (var i = 0; i < gameMoves.length; i++) {
+
+        var newGameMove = gameMoves[i];
+        gamePosition.move(newGameMove);
+        bestBoardValue = Math.min(bestBoardValue, minimax(gamePosition, depth - 1));
+
+        gamePosition.undo();
+    }
+    return bestBoardValue;
+
+
+
+}
 var evaluateBoard = function (gamePlace) {
     var totalEvaluation = 0;
     for (var i = 0; i < gamePlace.SQUARES.length; i++) {
