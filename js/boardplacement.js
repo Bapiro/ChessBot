@@ -58,12 +58,13 @@ function makeRandomMove() {
   game.move(possibleMoves[randomIdx]);
   chessBoard.position(game.fen());
 }
+
 function getBestMove(gamePlace) {
   var gameMoves = gamePlace.moves();
   var bestMove = null;
   var bestValue = -9999;
 
-  depth = 2;
+  depth = 1;
   for (var i = 0; i < gameMoves.length; i++) {
     var newGameMove = gameMoves[i];
     gamePlace.move(newGameMove);
@@ -79,6 +80,7 @@ function getBestMove(gamePlace) {
 
   return bestMove;
 }
+
 function minimax(gamePosition, depth) {
   if (depth == 0) {
     return -evaluateBoard(gamePosition);
@@ -95,6 +97,7 @@ function minimax(gamePosition, depth) {
   }
   return bestBoardValue;
 }
+
 var evaluateBoard = function(gamePlace) {
   var totalEvaluation = 0;
   for (var i = 0; i < gamePlace.SQUARES.length; i++) {
@@ -137,6 +140,7 @@ function makeGreatMove() {
     alert("Game over");
   }
 }
+
 function onDrop(source, target) {
   // see if the move is legal
   var move = game.move({
@@ -169,4 +173,5 @@ var config = {
   onMouseoutSquare: onMouseOutSquare,
   onSnapEnd: onSnapEnd
 };
+
 chessBoard = Chessboard("chessBoard", config);
