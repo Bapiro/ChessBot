@@ -69,7 +69,7 @@ function getBestMove(gamePlace) {
     var newGameMove = gameMoves[i];
     gamePlace.move(newGameMove);
 
-    var boardValue = minimax(gamePlace, depth);
+    var boardValue = minimax(gamePlace, depth, false);
 
     gamePlace.undo();
     if (boardValue >= bestValue) {
@@ -81,20 +81,36 @@ function getBestMove(gamePlace) {
   return bestMove;
 }
 
-function minimax(gamePosition, depth) {
+function minimax(gamePosition, depth, maximizingPlayer) {
   if (depth == 0) {
     return -evaluateBoard(gamePosition);
   }
-  var gameMoves = gamePosition.moves();
-  var boardValue = 0;
-  var bestBoardValue = 9999;
-  for (var i = 0; i < gameMoves.length; i++) {
-    var newGameMove = gameMoves[i];
-    gamePosition.move(newGameMove);
-    bestBoardValue = Math.min(bestBoardValue, minimax(gamePosition, depth - 1));
 
-    gamePosition.undo();
+  if(maximizingPlayer){
+    var gameMoves = gamePosition.moves();
+    var boardValue = 0;
+    var bestBoardValue = 9999;
+    for (var i = 0; i < gameMoves.length; i++) {
+      var newGameMove = gameMoves[i];
+      gamePosition.move(newGameMove);
+      bestBoardValue = Math.min(bestBoardValue, minimax(gamePosition, depth - 1), false);
+  
+      gamePosition.undo();
+    }
   }
+  else{
+    var gameMoves = gamePosition.moves();
+    var boardValue = 0;
+    var bestBoardValue = -9999;
+    for (var i = 0; i < gameMoves.length; i++) {
+      var newGameMove = gameMoves[i];
+      gamePosition.move(newGameMove);
+      bestBoardValue = Math.min(bestBoardValue, minimax(gamePosition, depth - 1), true);
+  
+      gamePosition.undo();
+    }
+  }
+
   return bestBoardValue;
 }
 
