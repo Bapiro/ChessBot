@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Chessbot</title>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <link rel="stylesheet" href="./chessboardjs/css/chessboard-1.0.0.min.css">
+    <link rel="stylesheet" href="./chessboardjs/css/chessboard-1.0.0.min.css" />
     <script src="./chessboardjs/js/chessboard-1.0.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div id="chessBoard" style="width: 400px"></div>
-    <script src="./js/boardplacement.js" type="text/javascript">
-    </script>
-
-</body>
-
+    <script src="./js/boardplacement.js" type="text/javascript"></script>
+    <button type="button" onclick="chessUndo()">Undo</button>
+  </body>
 </html>

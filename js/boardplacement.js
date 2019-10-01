@@ -1,6 +1,6 @@
 var chessBoard = null;
 var game = new Chess();
-var COUNTER
+var COUNTER;
 var whiteSquareGrey = "#a9a9a9";
 var blackSquareGrey = "#696969";
 function removeGreySquares() {
@@ -75,7 +75,7 @@ function getBestMove(gamePlace) {
 
     // False = blacks turn, true = whites turn
     var boardValue = minimax(gamePlace, depth, alpha, beta, false);
-    console.log("antal beräkningar " + COUNTER)
+    console.log("antal beräkningar " + COUNTER);
     gamePlace.undo();
     if (boardValue >= bestValue) {
       bestValue = boardValue;
@@ -89,14 +89,14 @@ function getBestMove(gamePlace) {
 function minimax(gamePosition, depth, alpha, beta, maximizingPlayer) {
   COUNTER = COUNTER + 1;
   if (depth == 0) {
-    console.log("Värde" + evaluateBoard(gamePosition))
+    console.log("Värde" + evaluateBoard(gamePosition));
     return -evaluateBoard(gamePosition);
   }
 
   var gameMoves = gamePosition.moves();
   var boardValue = 0;
 
-  if(maximizingPlayer){
+  if (maximizingPlayer) {
     var bestBoardValue = -9999;
     for (var i = 0; i < gameMoves.length; i++) {
       var newGameMove = gameMoves[i];
@@ -104,36 +104,31 @@ function minimax(gamePosition, depth, alpha, beta, maximizingPlayer) {
 
       eval = minimax(gamePosition, depth - 1, alpha, beta, false);
       bestBoardValue = Math.max(bestBoardValue, eval);
-      alpha = Math.max(bestBoardValue, alpha)
-      
+      alpha = Math.max(bestBoardValue, alpha);
+
       gamePosition.undo();
 
-      if(alpha >= beta)
-      {
+      if (alpha >= beta) {
         break;
       }
     }
-  }
-  else{
+  } else {
     var bestBoardValue = 9999;
     for (var i = 0; i < gameMoves.length; i++) {
       var newGameMove = gameMoves[i];
       gamePosition.move(newGameMove);
 
-      eval = minimax(gamePosition, depth - 1, alpha, beta, true)
+      eval = minimax(gamePosition, depth - 1, alpha, beta, true);
       bestBoardValue = Math.min(bestBoardValue, eval);
-      beta = Math.min(bestBoardValue, beta)
+      beta = Math.min(bestBoardValue, beta);
 
       gamePosition.undo();
 
-      if(alpha >= beta)
-      {
+      if (alpha >= beta) {
         break;
       }
-
     }
   }
-   
 
   return bestBoardValue;
 }
@@ -201,6 +196,11 @@ function onDrop(source, target) {
 // update the board position after the piece snap
 // for castling, en passant, pawn promotion
 function onSnapEnd() {
+  chessBoard.position(game.fen());
+}
+function chessUndo() {
+  game.undo();
+  game.undo();
   chessBoard.position(game.fen());
 }
 
