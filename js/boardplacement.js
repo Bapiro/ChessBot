@@ -89,7 +89,7 @@ function getBestMove(gamePlace) {
 function minimax(gamePosition, depth, alpha, beta, maximizingPlayer) {
   COUNTER = COUNTER + 1;
   if (depth == 0) {
-    console.log("Värde" + evaluateBoard(gamePosition))
+    //console.log("Värde" + evaluateBoard(gamePosition))
     return -evaluateBoard(gamePosition);
   }
 
@@ -104,10 +104,11 @@ function minimax(gamePosition, depth, alpha, beta, maximizingPlayer) {
 
       eval = minimax(gamePosition, depth - 1, alpha, beta, false);
       bestBoardValue = Math.max(bestBoardValue, eval);
-      alpha = Math.max(bestBoardValue, alpha)
       
       gamePosition.undo();
 
+      // Alpha-beta pruning
+      alpha = Math.max(bestBoardValue, alpha)
       if(alpha >= beta)
       {
         break;
@@ -122,10 +123,11 @@ function minimax(gamePosition, depth, alpha, beta, maximizingPlayer) {
 
       eval = minimax(gamePosition, depth - 1, alpha, beta, true)
       bestBoardValue = Math.min(bestBoardValue, eval);
-      beta = Math.min(bestBoardValue, beta)
 
       gamePosition.undo();
 
+      // Alpha-beta pruning
+      beta = Math.min(bestBoardValue, beta)
       if(alpha >= beta)
       {
         break;
