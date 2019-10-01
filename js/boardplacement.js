@@ -83,25 +83,25 @@ function getBestMove(gamePlace) {
 
 function minimax(gamePosition, depth, maximizingPlayer) {
   if (depth == 0) {
+    console.log("Värde" + evaluateBoard(gamePosition))
     return -evaluateBoard(gamePosition);
   }
 
+  var gameMoves = gamePosition.moves();
+  var boardValue = 0;
+
   if(maximizingPlayer){
-    var gameMoves = gamePosition.moves();
-    var boardValue = 0;
-    var bestBoardValue = 9999;
+    var bestBoardValue = -9999;
     for (var i = 0; i < gameMoves.length; i++) {
       var newGameMove = gameMoves[i];
       gamePosition.move(newGameMove);
-      bestBoardValue = Math.min(bestBoardValue, minimax(gamePosition, depth - 1), false);
+      bestBoardValue = Math.max(bestBoardValue, minimax(gamePosition, depth - 1), false);
   
       gamePosition.undo();
     }
   }
   else{
-    var gameMoves = gamePosition.moves();
-    var boardValue = 0;
-    var bestBoardValue = -9999;
+    var bestBoardValue = 9999;
     for (var i = 0; i < gameMoves.length; i++) {
       var newGameMove = gameMoves[i];
       gamePosition.move(newGameMove);
