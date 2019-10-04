@@ -27,7 +27,7 @@ function getBestMove(gamePlace) {
 function minimax(gamePosition, depth, alpha, beta, maximizingPlayer) {
   COUNTER = COUNTER + 1;
   if (depth == 0) {
-    console.log("Värde" + evaluateBoard(gamePosition));
+    //console.log("Värde" + evaluateBoard(gamePosition));
     return -evaluateBoard(gamePosition);
   }
 
@@ -70,37 +70,3 @@ function minimax(gamePosition, depth, alpha, beta, maximizingPlayer) {
 
   return bestBoardValue;
 }
-
-var evaluateBoard = function(gamePlace) {
-  var totalEvaluation = 0;
-  for (var i = 0; i < gamePlace.SQUARES.length; i++) {
-    totalEvaluation =
-      totalEvaluation + getPieceValue(gamePlace.get(gamePlace.SQUARES[i]));
-  }
-  return totalEvaluation;
-};
-
-var getPieceValue = function(piece) {
-  if (piece === null) {
-    return 0;
-  }
-  var getAbsoluteValue = function(piece) {
-    if (piece.type === "p") {
-      return 10;
-    } else if (piece.type === "r") {
-      return 50;
-    } else if (piece.type === "n") {
-      return 30;
-    } else if (piece.type === "b") {
-      return 30;
-    } else if (piece.type === "q") {
-      return 90;
-    } else if (piece.type === "k") {
-      return 900;
-    }
-    throw "Unknown piece type: " + piece.type;
-  };
-
-  var absoluteValue = getAbsoluteValue(piece, piece.color === "w");
-  return piece.color === "w" ? absoluteValue : -absoluteValue;
-};
